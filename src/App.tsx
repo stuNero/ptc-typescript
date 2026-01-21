@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import useFetchJson from "./utils/useFetchJson";
+import Card from "./Card";
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+let filterWordRaw = "psychic";
+let filterWord = filterWordRaw.slice(0, 1).toUpperCase() + filterWordRaw.slice(1);
+
+interface cardImage {
+  small: string;
+  large: string;
 }
+export interface CardData {
+  name: string;
+  price: number;
+  stock: number;
+  types: string[];
+  images: cardImage;
+}
+export default function App() {
+  const cards = useFetchJson<CardData[]>("/data1-1.json");
 
-export default App
+  return cards && <>
+    <h1>Pokemon kort: </h1>
+
+    {cards
+      .filter(({ types }) => types?.includes(filterWord))
+      ?.map((props, i) => <Card key={i} {...props} />)
+    }
+  </>;
+};
