@@ -1,7 +1,6 @@
 import type { CardData } from "./App";
 
 export default function Card({ name, price, stock, types, images }: CardData) {
-  const altmsg = '${}';
   return <section className="card">
     <div>
       <h2>Name: {name}</h2>
@@ -9,6 +8,6 @@ export default function Card({ name, price, stock, types, images }: CardData) {
       <p>Stock: {stock}</p>
       <p>types: {types}</p>
     </div>
-    <img src={images.small} alt='Image of a pokemon card'></img>
+    <img src={images.small} alt={`Image of a ${name} pokemon card`}></img>
   </section >;
-};  
+};

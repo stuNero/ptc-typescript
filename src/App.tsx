@@ -1,30 +1,12 @@
-import useFetchJson from "./utils/useFetchJson";
+import { useLocation } from 'react-router-dom';
 import Card from "./Card";
+import Main from "./partials/Main";
 
 
-let filterWordRaw = "psychic";
-let filterWord = filterWordRaw.slice(0, 1).toUpperCase() + filterWordRaw.slice(1);
-
-interface cardImage {
-  small: string;
-  large: string;
-}
-export interface CardData {
-  name: string;
-  price: number;
-  stock: number;
-  types: string[];
-  images: cardImage;
-}
 export default function App() {
-  const cards = useFetchJson<CardData[]>("/data1-1.json");
-
-  return cards && <>
-    <h1>Pokemon kort: </h1>
-
-    {cards
-      .filter(({ types }) => types?.includes(filterWord))
-      ?.map((props, i) => <Card key={i} {...props} />)
-    }
+  useLocation();
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  return <>
+    <Main />
   </>;
 };
